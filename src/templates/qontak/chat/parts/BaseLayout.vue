@@ -1,6 +1,19 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { MpDivider, MpText, css, MpFlex } from "@mekari/pixel3";
+import {
+  css,
+  MpDivider,
+  MpText,
+  MpFlex,
+  MpIcon,
+  MpBadge,
+  MpPopover,
+  MpPopoverTrigger,
+  MpPopoverContent,
+  MpButton,
+  MpPopoverList,
+  MpPopoverListItem,
+} from "@mekari/pixel3";
 import {
   PixelNavbar,
   PixelSidebar,
@@ -24,6 +37,7 @@ import { usePixelLayout } from "@/components/layouts/composables";
 import SwitchAccountContent from "./SwitchAccountContent.vue";
 import NotificationContent from "./NotificationContent.vue";
 import { SIDEBAR_ITEMS } from "./menus";
+import { RouterLin, useRouter } from "vue-router";
 
 const props = defineProps({
   isShowChildMenu: Boolean,
@@ -35,6 +49,19 @@ const sidebarChildState = ref({
   activeMenu: "4.1",
 });
 
+const isOpen = ref(false);
+
+function onOpen() {
+  console.log("onOpen =>", true);
+}
+
+function onClose() {
+  if (isOpen.value) {
+    console.log("onClose =>", true);
+    isOpen.value = false;
+  }
+}
+
 const {
   setAccountInformation,
   isSidebarCollapsed,
@@ -44,14 +71,11 @@ const {
 
 setAccountInformation({
   companyId: "12345678",
-  companyName: "PT Mid Solusi Nusantara",
-  fullName: "Rizal Chandra",
-  userPhoto: "https://i.pravatar.cc/300",
+  companyName: "PT Central Perk Indonesia",
+  fullName: "Christin Purnama Sari",
+  userPhoto: "",
 });
 
-function onSelectApp(value: string) {
-  console.log("SELECT APP =>", value);
-}
 function onSelectQuickAction(value: string) {
   console.log("SELECT QUICK ACTION =>", value);
 }
@@ -63,15 +87,19 @@ function handleSelectMenu(payload: string) {
 function compareIsActive(payload: string) {
   return sidebarChildState.value.activeMenu === payload;
 }
+
+function onSelectApp(value: string) {
+  console.log("SELECT APP =>", value);
+}
 </script>
 
 <template>
   <PixelNavbar>
     <template #left>
       <MpFlex alignItems="center">
-        <RouterLink to="/templates/layouts/general">
+        <RouterLink to="/templates/qontak/chat">
           <img
-            src="https://cdn.mekari.design/logo/pixel/default.svg"
+            src="https://cdn.mekari.design/logo/qontak/default.svg"
             alt=""
             height="56"
             width="auto"
@@ -82,12 +110,11 @@ function compareIsActive(payload: string) {
           :class="css({ height: 6, mr: '4', ml: '6' })"
         />
         <SelectApp
-          :model-value="{ id: 1, label: 'HRIS', isSelected: true }"
+          :model-value="{ id: 1, label: 'Omnichannel', isSelected: true }"
           :items="[
-            { id: 1, label: 'HRIS', isSelected: true },
-            { id: 2, label: 'Insights' },
-            { id: 3, label: 'Performance management' },
-            { id: 4, label: 'People', isNew: true },
+            { id: 1, label: 'Omnichannel', isSelected: true },
+            { id: 2, label: 'CRM' },
+            { id: 3, label: 'Knowlegde Base', isNew: true },
           ]"
           @update:model-value="onSelectApp"
         />
@@ -95,20 +122,12 @@ function compareIsActive(payload: string) {
     </template>
 
     <template #right>
-      <QuickAction
-        :items="[
-          {
-            category: 'B U A T',
-            childs: ['Penjualan', 'Pembelian', 'Biaya'],
-          },
-          {
-            category: 'T A M B A H',
-            childs: ['Kontak', 'Produk', 'Gudang'],
-          },
-        ]"
-        @select="onSelectQuickAction"
+      <MpButton
+        v-tooltip="'Help center'"
+        aria-label="help button"
+        left-icon="help"
+        variant="ghost"
       />
-      <Referral url="https://mekari.com/" />
 
       <Notification>
         <NotificationContent />
@@ -124,7 +143,7 @@ function compareIsActive(payload: string) {
           "
         >
           <MpText :class="css({ marginBottom: '2' })">
-            Hi Rizal, your apps are listed here.
+            Hi Christiin, your apps are listed here.
           </MpText>
 
           <SwitchAppItem
@@ -213,8 +232,11 @@ function compareIsActive(payload: string) {
         <SidebarItemWithChild
           v-if="menu.as === 'group'"
           :key="index"
-          label="With Grouping"
+          :label="menu.name"
           :items="menu.items"
+          :to="menu.link"
+          :icon="menu.icon"
+          :isActive="menu.isActive"
           :isHideLabel="
             isSidebarCollapsed ? (isSidebarHovered ? false : true) : false
           "
@@ -311,7 +333,6 @@ function compareIsActive(payload: string) {
         </SidebarChildItem>
       </ul>
     </PixelSidebarChild>
-
     <slot />
   </div>
 </template>

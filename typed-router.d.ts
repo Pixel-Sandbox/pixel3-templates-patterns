@@ -52,6 +52,8 @@ declare module 'vue-router/auto/routes' {
     '/templates/layouts/jurnal/': RouteRecordInfo<'/templates/layouts/jurnal/', '/templates/layouts/jurnal', Record<never, never>, Record<never, never>>,
     '/templates/layouts/jurnal/[...path]': RouteRecordInfo<'/templates/layouts/jurnal/[...path]', '/templates/layouts/jurnal/:path(.*)', { path: ParamValue<true> }, { path: ParamValue<false> }>,
     '/templates/layouts/jurnal/settings': RouteRecordInfo<'/templates/layouts/jurnal/settings', '/templates/layouts/jurnal/settings', Record<never, never>, Record<never, never>>,
+    '/templates/qontak/chat/': RouteRecordInfo<'/templates/qontak/chat/', '/templates/qontak/chat', Record<never, never>, Record<never, never>>,
+    '/templates/qontak/chat/inbox': RouteRecordInfo<'/templates/qontak/chat/inbox', '/templates/qontak/chat/inbox', Record<never, never>, Record<never, never>>,
   }
 }
 
