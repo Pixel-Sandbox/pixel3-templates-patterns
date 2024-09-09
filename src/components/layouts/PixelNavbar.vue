@@ -19,7 +19,7 @@
     :class="
       css({
         position: 'fixed',
-        zIndex: '1700',
+        zIndex: '101',
         width: 'full',
         bg: 'white',
         px: '6',

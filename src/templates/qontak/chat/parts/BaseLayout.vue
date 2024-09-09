@@ -1,28 +1,35 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import {
   css,
   MpDivider,
   MpText,
   MpFlex,
+  MpButton,
   MpIcon,
-  MpBadge,
   MpPopover,
   MpPopoverTrigger,
   MpPopoverContent,
-  MpButton,
   MpPopoverList,
   MpPopoverListItem,
+  MpButtonGroup,
+  MpDrawer,
+  MpDrawerBody,
+  MpDrawerCloseButton,
+  MpDrawerContent,
+  MpDrawerFooter,
+  MpDrawerHeader,
+  MpDrawerOverlay,
 } from "@mekari/pixel3";
+
 import {
   PixelNavbar,
   PixelSidebar,
   PixelSidebarChild,
 } from "@/components/layouts";
+
 import {
   Notification,
-  QuickAction,
-  Referral,
   SelectApp,
   SwitchAccount,
   SwitchApp,
@@ -31,13 +38,11 @@ import {
   SidebarItem,
   SidebarItemWithChild,
   SidebarChildItem,
-  SidebarChildItemAccordion,
 } from "@/components/layouts/parts";
 import { usePixelLayout } from "@/components/layouts/composables";
 import SwitchAccountContent from "./SwitchAccountContent.vue";
 import NotificationContent from "./NotificationContent.vue";
 import { SIDEBAR_ITEMS } from "./menus";
-import { RouterLin, useRouter } from "vue-router";
 
 const props = defineProps({
   isShowChildMenu: Boolean,
@@ -46,28 +51,20 @@ const props = defineProps({
 const sidebarChildState = ref({
   isActive: true,
   isHovered: false,
-  activeMenu: "4.1",
+  activeMenu: "1",
 });
-
-const isOpen = ref(false);
-
-function onOpen() {
-  console.log("onOpen =>", true);
-}
-
-function onClose() {
-  if (isOpen.value) {
-    console.log("onClose =>", true);
-    isOpen.value = false;
-  }
-}
 
 const {
   setAccountInformation,
   isSidebarCollapsed,
   isSidebarHovered,
   isSidebarChildCollapsed,
+  useSidebar
 } = usePixelLayout();
+
+onMounted(() => {
+  useSidebar.setCollapse(true)
+})
 
 setAccountInformation({
   companyId: "12345678",
@@ -76,8 +73,17 @@ setAccountInformation({
   userPhoto: "",
 });
 
-function onSelectQuickAction(value: string) {
-  console.log("SELECT QUICK ACTION =>", value);
+const isOpenDrawer = ref(false);
+
+function onOpenDrawer() {
+  console.log("DRAWER OPEN");
+}
+
+function onCloseDrawer() {
+  if (isOpenDrawer.value) {
+    console.log("DRAWER CLOSE");
+    isOpenDrawer.value = false;
+  }
 }
 
 function handleSelectMenu(payload: string) {
@@ -266,73 +272,191 @@ function onSelectApp(value: string) {
         <MpText
           :class="
             css({
-              whiteSpace: 'nowrap',
-              fontSize: 'sm',
-              fontWeight: 'semiBold',
-              letterSpacing: '2px',
-              color: 'blue.400',
+              letterSpacing: '2.88px',
               p: 2,
             })
           "
+          size="label-small"
+          weight="semiBold"
+          color="blue.400"
         >
-          CHILD MENU
+          INBOX
         </MpText>
 
         <SidebarChildItem
           @click="[handleSelectMenu('1')]"
           :isActive="compareIsActive('1')"
+          count="99+"
         >
-          Dummy menu 1
+          All inboxes
         </SidebarChildItem>
 
         <SidebarChildItem
           @click="handleSelectMenu('2')"
           :isActive="compareIsActive('2')"
         >
-          Dummy menu 2
+          Your chats
         </SidebarChildItem>
 
         <SidebarChildItem
           @click="handleSelectMenu('3')"
           :isActive="compareIsActive('3')"
+          count="21"
         >
-          Dummy menu 3
+          Unassigned
         </SidebarChildItem>
 
-        <SidebarChildItemAccordion
-          :defaultIsOpen="true"
-          :isActive="['4.1', '4.2'].includes(sidebarChildState.activeMenu)"
+        <SidebarChildItem
+          @click="handleSelectMenu('4')"
+          :isActive="compareIsActive('4')"
+          count="88"
         >
-          <template #header> Dummy menu 4 </template>
-
-          <template #content>
-            <MpFlex flexDirection="column" pl="2">
-              <SidebarChildItem
-                variant="accordionItem"
-                @click="handleSelectMenu('4.1')"
-                :isActive="compareIsActive('4.1')"
-              >
-                Dummy menu 4.1
-              </SidebarChildItem>
-              <SidebarChildItem
-                variant="accordionItem"
-                @click="handleSelectMenu('4.2')"
-                :isActive="compareIsActive('4.2')"
-              >
-                Dummy menu 4.2
-              </SidebarChildItem>
-            </MpFlex>
-          </template>
-        </SidebarChildItemAccordion>
-
+          Assigned
+        </SidebarChildItem>
         <SidebarChildItem
           @click="handleSelectMenu('5')"
           :isActive="compareIsActive('5')"
         >
-          Dummy menu 5
+          Resolved
+        </SidebarChildItem>
+        <SidebarChildItem
+          @click="handleSelectMenu('6')"
+          :isActive="compareIsActive('6')"
+          count="34"
+        >
+          Need review
+        </SidebarChildItem>
+        <MpDivider :class="css({ marginTop: '2', marginBottom: '2' })" />
+
+        <MpFlex
+          justify="space-between"
+          alignItems="center"
+          :class="
+            css({
+              height: '36px',
+            })
+          "
+        >
+          <MpText
+            :class="
+              css({
+                letterSpacing: '2px',
+                p: 2,
+              })
+            "
+            size="label-small"
+            weight="semiBold"
+            color="blue.400"
+          >
+            CUSTOM VIEW
+          </MpText>
+
+          <MpPopover trigger="click" placement="right-start">
+            <MpPopoverTrigger>
+              <button
+                :class="
+                  css({
+                    background: 'blue.100',
+                    rounded: 'sm',
+                    width: '5',
+                    height: '5',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                  })
+                "
+                aria-label="custom view button"
+              >
+                <MpIcon name="add" size="sm" />
+              </button>
+            </MpPopoverTrigger>
+
+            <MpPopoverContent
+              :class="
+                css({
+                  width: '176px',
+                  maxHeight: '196px',
+                  overflowY: 'auto',
+                })
+              "
+            >
+              <MpPopoverList>
+                <MpPopoverListItem> 🤯 L2 follow up </MpPopoverListItem>
+                <MpPopoverListItem> 🥊 Baku hantam </MpPopoverListItem>
+                <MpPopoverListItem> 💰️ Large enterprise </MpPopoverListItem>
+                <MpPopoverListItem> ⏰ SLA at risk </MpPopoverListItem>
+                <MpPopoverListItem> 🛠️ Tech support </MpPopoverListItem>
+              </MpPopoverList>
+              <button
+                :class="
+                  css({
+                    cursor: 'pointer',
+                    position: 'sticky',
+                    bottom: '0',
+                    width: 'full',
+                    textAlign: 'center',
+                    fontWeight: 'semiBold',
+                    py: 2,
+                    background: 'white',
+                    borderTopWidth: '1px',
+                    borderColor: 'gray.100',
+                    color: 'blue.400',
+                    _hover: {
+                      color: 'blue.500',
+                    },
+                  })
+                "
+                @click="isOpenDrawer = true"
+              >
+                Create a view
+              </button>
+            </MpPopoverContent>
+          </MpPopover>
+        </MpFlex>
+        <SidebarChildItem
+          @click="handleSelectMenu('7')"
+          :isActive="compareIsActive('7')"
+          count="12"
+        >
+          🎧 Customer support apple
+        </SidebarChildItem>
+        <SidebarChildItem
+          @click="handleSelectMenu('8')"
+          :isActive="compareIsActive('8')"
+          count="22"
+        >
+          💰 Sales
         </SidebarChildItem>
       </ul>
     </PixelSidebarChild>
+
+    <MpDrawer
+      :is-open="isOpenDrawer"
+      @open="onOpenDrawer"
+      @close="onCloseDrawer"
+      :is-keep-alive="true"
+      placement="right"
+    >
+      <MpDrawerContent>
+        <MpDrawerHeader>
+          Create custom view
+
+          <MpDrawerCloseButton />
+        </MpDrawerHeader>
+        <MpDrawerBody> Drawer Content </MpDrawerBody>
+        <MpDrawerFooter>
+          <MpButtonGroup>
+            <MpButton variant="secondary" @click="onCloseDrawer">
+              Cancel
+            </MpButton>
+            <MpButton> Save </MpButton>
+          </MpButtonGroup>
+        </MpDrawerFooter>
+      </MpDrawerContent>
+
+      <MpDrawerOverlay />
+    </MpDrawer>
     <slot />
   </div>
 </template>

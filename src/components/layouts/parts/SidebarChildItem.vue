@@ -10,7 +10,8 @@
     variant: {
       type: String as PropType<'item' | 'accordionItem'>,
       default: 'item'
-    }
+    },
+    count: String,
   })
 
   const classes = cva({
@@ -19,7 +20,10 @@
       flex: '1',
       borderRadius: 'md',
       p: '2',
-      transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0s'
+      transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0s',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
     },
     variants: {
       variant: {
@@ -92,10 +96,13 @@
   >
     <MpText
       :class="
-        css({ whiteSpace: 'nowrap', color: 'inherit', lineHeight: '3xl', fontWeight: 'inherit' })
+        css({ color: 'inherit', fontWeight: 'inherit', minWidth: '0' })
       "
     >
       <slot />
     </MpText>
+    <MpText v-if="count" as="span" color="gray.600" :class="css({
+      marginLeft: '2'
+    })">{{ count }}</MpText>
   </component>
 </template>

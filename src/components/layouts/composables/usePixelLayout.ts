@@ -110,6 +110,7 @@ function useLayout() {
     sidebarNode,
     isSidebarLoading,
     isSidebarHovered,
+    isSidebarCollapsed,
     useSidebarChild,
     handleSidebarHover,
 
@@ -120,7 +121,6 @@ function useLayout() {
     /** Navbar */
     navbarNode,
     isNavbarLoading,
-    isSidebarCollapsed,
     useNavbar,
 
     // Content

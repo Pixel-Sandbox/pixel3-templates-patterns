@@ -1,4 +1,4 @@
-import type { MenuItem } from '@/components/types'
+import { MenuItem } from '@/components/layouts'
 
 export const SIDEBAR_ITEMS: MenuItem[] = [
   {

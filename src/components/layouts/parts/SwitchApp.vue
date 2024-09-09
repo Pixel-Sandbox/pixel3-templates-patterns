@@ -6,7 +6,6 @@ import {
   MpDrawerCloseButton,
   MpDrawerContent,
   MpDrawerOverlay,
-  MpIcon,
   css,
 } from "@mekari/pixel3";
 import { ref } from "vue";

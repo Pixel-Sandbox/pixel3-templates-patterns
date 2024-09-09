@@ -47,7 +47,6 @@
   const isToggled = ref(false)
 
   const handleOpenDrawer = (value: boolean) => {
-    console.log('Called')
     isOpen.value = value
   }
 
