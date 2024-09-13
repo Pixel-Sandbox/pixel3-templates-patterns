@@ -18,3 +18,6 @@ export { default as SidebarItemWithChild } from './SidebarItemWithChild.vue'
 // Sidebar child parts
 export { default as SidebarChildItem } from './SidebarChildItem.vue'
 export { default as SidebarChildItemAccordion } from './SidebarChildItemAccordion.vue'
+
+// Other parts
+export { default as ButtonPopover } from './ButtonPopover.vue'

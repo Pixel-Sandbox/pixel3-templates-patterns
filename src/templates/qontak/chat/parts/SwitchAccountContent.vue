@@ -1,77 +1,82 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import {
-    css,
-    MpAvatar,
-    MpText,
-    MpPopoverList,
-    MpPopoverListItem,
-    MpDivider,
-    MpIcon,
-    MpButton
-  } from '@mekari/pixel3'
-  import { sva } from '@mekari/pixel3-styled-system/css'
-  import { usePixelLayout } from '@/components/layouts/composables/usePixelLayout'
+import { ref } from "vue";
+import {
+  css,
+  MpAvatar,
+  MpText,
+  MpPopoverList,
+  MpPopoverListItem,
+  MpDivider,
+  MpIcon,
+  MpButton,
+} from "@mekari/pixel3";
+import { sva } from "@mekari/pixel3-styled-system/css";
+import { usePixelLayout } from "@/components/layouts/composables/usePixelLayout";
+import { ButtonPopover } from "@/components/layouts/parts";
 
-  const { accountInformation } = usePixelLayout()
+const { accountInformation } = usePixelLayout();
 
-  const profileStyle = sva({
-    slots: ['root', 'content', 'avatar'],
-    base: {
-      root: {
-        backgroundColor: 'background',
-        borderBottomWidth: '1px',
-        borderColor: 'gray.100',
-        borderTopRadius: 'md',
-        py: 4
-      },
-      content: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column'
-      },
-      avatar: {
-        marginBottom: '2'
-      }
-    }
-  })
-  const footerStyle = sva({
-    slots: ['root', 'font'],
-    base: {
-      root: {
-        display: 'flex',
-        gap: '3',
-        flexWrap: 'wrap',
-        px: '3',
-        py: '4'
-      },
-      font: {
-        fontSize: 'xs',
-        color: 'gray.600'
-      }
-    }
-  })
-  const popoverHeaderStyle = css({
-    display: 'flex',
-    gap: 2,
-    alignItems: 'center',
-    py: 2,
-    px: 3,
-    roundedTop: 'md',
-    backgroundColor: 'gray.50',
-    borderBottomWidth: '1px',
-    borderColor: 'gray.100'
-  })
-  const profileClass = profileStyle()
-  const footerClass = footerStyle()
+const profileStyle = sva({
+  slots: ["root", "content", "avatar"],
+  base: {
+    root: {
+      backgroundColor: "background",
+      borderBottomWidth: "1px",
+      borderColor: "gray.100",
+      borderTopRadius: "md",
+      py: 4,
+    },
+    content: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      flexDirection: "column",
+    },
+    avatar: {
+      marginBottom: "2",
+    },
+  },
+});
+const footerStyle = sva({
+  slots: ["root", "font"],
+  base: {
+    root: {
+      display: "flex",
+      gap: "3",
+      flexWrap: "wrap",
+      px: "3",
+      py: "4",
+    },
+    font: {
+      fontSize: "xs",
+      color: "gray.600",
+    },
+  },
+});
+const popoverHeaderStyle = css({
+  display: "flex",
+  gap: 2,
+  alignItems: "center",
+  py: 2,
+  px: 3,
+  roundedTop: "md",
+  backgroundColor: "gray.50",
+  borderBottomWidth: "1px",
+  borderColor: "gray.100",
+});
+const profileClass = profileStyle();
+const footerClass = footerStyle();
 
-  type ContentType = 'parent' | 'companyList' | 'changeLanguage' | 'switchAccount'
-  const showToggleContent = ref<ContentType>('parent')
+type ContentType =
+  | "parent"
+  | "companyList"
+  | "changeLanguage"
+  | "switchAccount";
+const showToggleContent = ref<ContentType>("parent");
 
-  function onToggleContent(content: ContentType) {
-    showToggleContent.value = content
-  }
+function onToggleContent(content: ContentType) {
+  showToggleContent.value = content;
+}
 </script>
 
 <template>
@@ -86,7 +91,9 @@
             size="lg"
           />
           <MpText weight="semiBold"> {{ accountInformation.fullName }} </MpText>
-          <MpText color="gray.600"> {{ accountInformation.companyName }} </MpText>
+          <MpText color="gray.600">
+            {{ accountInformation.companyName }}
+          </MpText>
         </div>
       </div>
 
@@ -160,7 +167,7 @@
 
         <MpPopoverListItem>
           <div>
-            <MpText> Company name 2 </MpText>
+            <MpText> Company 2 </MpText>
             <MpText color="gray.600"> Company id : 377751 </MpText>
           </div>
         </MpPopoverListItem>
@@ -171,26 +178,8 @@
             <MpText color="gray.600"> Company id : 377752 </MpText>
           </div>
         </MpPopoverListItem>
-
-        <button
-          :class="
-            css({
-              cursor: 'pointer',
-              width: 'full',
-              textAlign: 'center',
-              pt: 2,
-              borderTopWidth: '1px',
-              borderColor: 'blue.50',
-              color: 'blue.400',
-              _hover: {
-                color: 'blue.500'
-              }
-            })
-          "
-        >
-          + Create new company
-        </button>
       </MpPopoverList>
+      <ButtonPopover>+ Create new company</ButtonPopover>
     </template>
 
     <template v-if="showToggleContent === 'changeLanguage'">
@@ -248,26 +237,8 @@
         <MpPopoverListItem>
           <MpText> ahmad.zakiy@mekari.com </MpText>
         </MpPopoverListItem>
-
-        <button
-          :class="
-            css({
-              cursor: 'pointer',
-              width: 'full',
-              textAlign: 'center',
-              pt: 2,
-              borderTopWidth: '1px',
-              borderColor: 'blue.50',
-              color: 'blue.400',
-              _hover: {
-                color: 'blue.500'
-              }
-            })
-          "
-        >
-          + Add new account
-        </button>
       </MpPopoverList>
+      <ButtonPopover>+ Add new account</ButtonPopover>
     </template>
   </div>
 </template>

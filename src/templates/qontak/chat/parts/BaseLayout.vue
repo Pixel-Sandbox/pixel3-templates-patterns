@@ -6,20 +6,11 @@ import {
   MpText,
   MpFlex,
   MpButton,
-  MpIcon,
   MpPopover,
   MpPopoverTrigger,
   MpPopoverContent,
   MpPopoverList,
   MpPopoverListItem,
-  MpButtonGroup,
-  MpDrawer,
-  MpDrawerBody,
-  MpDrawerCloseButton,
-  MpDrawerContent,
-  MpDrawerFooter,
-  MpDrawerHeader,
-  MpDrawerOverlay,
 } from "@mekari/pixel3";
 
 import {
@@ -38,10 +29,14 @@ import {
   SidebarItem,
   SidebarItemWithChild,
   SidebarChildItem,
+  ButtonPopover,
 } from "@/components/layouts/parts";
-import { usePixelLayout } from "@/components/layouts/composables";
+
 import SwitchAccountContent from "./SwitchAccountContent.vue";
 import NotificationContent from "./NotificationContent.vue";
+import CreateCustomView from "./CreateCustomView.vue";
+
+import { usePixelLayout } from "@/components/layouts/composables";
 import { SIDEBAR_ITEMS } from "./menus";
 
 const props = defineProps({
@@ -59,12 +54,12 @@ const {
   isSidebarCollapsed,
   isSidebarHovered,
   isSidebarChildCollapsed,
-  useSidebar
+  useSidebar,
 } = usePixelLayout();
 
 onMounted(() => {
-  useSidebar.setCollapse(true)
-})
+  useSidebar.setCollapse(true);
+});
 
 setAccountInformation({
   companyId: "12345678",
@@ -73,18 +68,7 @@ setAccountInformation({
   userPhoto: "",
 });
 
-const isOpenDrawer = ref(false);
-
-function onOpenDrawer() {
-  console.log("DRAWER OPEN");
-}
-
-function onCloseDrawer() {
-  if (isOpenDrawer.value) {
-    console.log("DRAWER CLOSE");
-    isOpenDrawer.value = false;
-  }
-}
+const isOpenCreateCustomView = ref(false);
 
 function handleSelectMenu(payload: string) {
   sidebarChildState.value.activeMenu = payload;
@@ -96,6 +80,11 @@ function compareIsActive(payload: string) {
 
 function onSelectApp(value: string) {
   console.log("SELECT APP =>", value);
+}
+
+function handleShowCreateCustomView(closePopoverFunc: () => void) {
+  isOpenCreateCustomView.value = true;
+  closePopoverFunc();
 }
 </script>
 
@@ -351,31 +340,27 @@ function onSelectApp(value: string) {
             CUSTOM VIEW
           </MpText>
 
-          <MpPopover trigger="click" placement="right-start">
+          <MpPopover
+            id="popover-custom-view"
+            trigger="click"
+            placement="right-start"
+            :is-close-on-select="true"
+            v-slot="{ onClosePopover }"
+          >
             <MpPopoverTrigger>
-              <button
-                :class="
-                  css({
-                    background: 'blue.100',
-                    rounded: 'sm',
-                    width: '5',
-                    height: '5',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    cursor: 'pointer',
-                  })
-                "
+              <MpButton
                 aria-label="custom view button"
-              >
-                <MpIcon name="add" size="sm" />
-              </button>
+                left-icon="add"
+                variant="ghost"
+                size="sm"
+              ></MpButton>
             </MpPopoverTrigger>
 
             <MpPopoverContent
               :class="
                 css({
                   width: '176px',
+                  maxWidth: '280px',
                   maxHeight: '196px',
                   overflowY: 'auto',
                 })
@@ -388,29 +373,9 @@ function onSelectApp(value: string) {
                 <MpPopoverListItem> ⏰ SLA at risk </MpPopoverListItem>
                 <MpPopoverListItem> 🛠️ Tech support </MpPopoverListItem>
               </MpPopoverList>
-              <button
-                :class="
-                  css({
-                    cursor: 'pointer',
-                    position: 'sticky',
-                    bottom: '0',
-                    width: 'full',
-                    textAlign: 'center',
-                    fontWeight: 'semiBold',
-                    py: 2,
-                    background: 'white',
-                    borderTopWidth: '1px',
-                    borderColor: 'gray.100',
-                    color: 'blue.400',
-                    _hover: {
-                      color: 'blue.500',
-                    },
-                  })
-                "
-                @click="isOpenDrawer = true"
+              <ButtonPopover @click="handleShowCreateCustomView(onClosePopover)"
+                >Create a view</ButtonPopover
               >
-                Create a view
-              </button>
             </MpPopoverContent>
           </MpPopover>
         </MpFlex>
@@ -419,7 +384,7 @@ function onSelectApp(value: string) {
           :isActive="compareIsActive('7')"
           count="12"
         >
-          🎧 Customer support apple
+          🎧 Customer support
         </SidebarChildItem>
         <SidebarChildItem
           @click="handleSelectMenu('8')"
@@ -431,32 +396,10 @@ function onSelectApp(value: string) {
       </ul>
     </PixelSidebarChild>
 
-    <MpDrawer
-      :is-open="isOpenDrawer"
-      @open="onOpenDrawer"
-      @close="onCloseDrawer"
-      :is-keep-alive="true"
-      placement="right"
-    >
-      <MpDrawerContent>
-        <MpDrawerHeader>
-          Create custom view
-
-          <MpDrawerCloseButton />
-        </MpDrawerHeader>
-        <MpDrawerBody> Drawer Content </MpDrawerBody>
-        <MpDrawerFooter>
-          <MpButtonGroup>
-            <MpButton variant="secondary" @click="onCloseDrawer">
-              Cancel
-            </MpButton>
-            <MpButton> Save </MpButton>
-          </MpButtonGroup>
-        </MpDrawerFooter>
-      </MpDrawerContent>
-
-      <MpDrawerOverlay />
-    </MpDrawer>
+    <CreateCustomView
+      :is-open="isOpenCreateCustomView"
+      @close="isOpenCreateCustomView = false"
+    />
     <slot />
   </div>
 </template>
