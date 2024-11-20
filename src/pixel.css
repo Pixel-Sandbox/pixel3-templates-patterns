@@ -1,0 +1,17 @@
+@layer pixel_reset, pixel_base, pixel_tokens, pixel_recipes, pixel_utilities;
+
+/* // EXTEND PIXEL TOKEN 2.1 WITH PIXEL TOKEN 2.4 FOR QONTAK INBOX REVAMP PURPOSE */
+:root {
+  --mp-colors-icon-default: #758195;
+  --mp-colors-borders-default: #DCDFE4;
+  --mp-colors-background-neutral-subtle: #F0F1F3;
+  --mp-colors-background-neutral-hovered: #F7F8F9;
+  --mp-colors-background-brand-pressed: #A8B2EF;
+  --mp-colors-background-brand-selected: #D6DBF7;
+  --mp-colors-text-secondary: #656F80;
+  --mp-colors-text-default: #272B32;
+  --mp-colors-text-placeholder: #8690A2;
+  --mp-colors-text-warning: #A14A0B;
+  --mp-colors-text-success: #186F4A;
+  --mp-colors-text-information: #4053BC;
+}
