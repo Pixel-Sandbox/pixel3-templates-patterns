@@ -44,6 +44,7 @@ declare module 'vue-router/auto/routes' {
     '/patterns/input/otp': RouteRecordInfo<'/patterns/input/otp', '/patterns/input/otp', Record<never, never>, Record<never, never>>,
     '/patterns/input/popover-prefix-suffix': RouteRecordInfo<'/patterns/input/popover-prefix-suffix', '/patterns/input/popover-prefix-suffix', Record<never, never>, Record<never, never>>,
     '/patterns/pagination/pagination': RouteRecordInfo<'/patterns/pagination/pagination', '/patterns/pagination/pagination', Record<never, never>, Record<never, never>>,
+    '/patterns/select-criteria/select-criteria': RouteRecordInfo<'/patterns/select-criteria/select-criteria', '/patterns/select-criteria/select-criteria', Record<never, never>, Record<never, never>>,
     '/patterns/summary-box/summary-box': RouteRecordInfo<'/patterns/summary-box/summary-box', '/patterns/summary-box/summary-box', Record<never, never>, Record<never, never>>,
     '/templates/jurnal/report-index/': RouteRecordInfo<'/templates/jurnal/report-index/', '/templates/jurnal/report-index', Record<never, never>, Record<never, never>>,
     '/templates/layouts/general/': RouteRecordInfo<'/templates/layouts/general/', '/templates/layouts/general', Record<never, never>, Record<never, never>>,
