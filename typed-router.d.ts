@@ -46,6 +46,7 @@ declare module 'vue-router/auto/routes' {
     '/patterns/pagination/pagination': RouteRecordInfo<'/patterns/pagination/pagination', '/patterns/pagination/pagination', Record<never, never>, Record<never, never>>,
     '/patterns/summary-box/summary-box': RouteRecordInfo<'/patterns/summary-box/summary-box', '/patterns/summary-box/summary-box', Record<never, never>, Record<never, never>>,
     '/patterns/unified-notification/unified-nofication': RouteRecordInfo<'/patterns/unified-notification/unified-nofication', '/patterns/unified-notification/unified-nofication', Record<never, never>, Record<never, never>>,
+    '/patterns/user-account/user-account': RouteRecordInfo<'/patterns/user-account/user-account', '/patterns/user-account/user-account', Record<never, never>, Record<never, never>>,
     '/templates/jurnal/report-index/': RouteRecordInfo<'/templates/jurnal/report-index/', '/templates/jurnal/report-index', Record<never, never>, Record<never, never>>,
     '/templates/layouts/general/': RouteRecordInfo<'/templates/layouts/general/', '/templates/layouts/general', Record<never, never>, Record<never, never>>,
     '/templates/layouts/general/boxed': RouteRecordInfo<'/templates/layouts/general/boxed', '/templates/layouts/general/boxed', Record<never, never>, Record<never, never>>,
